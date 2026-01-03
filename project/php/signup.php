@@ -13,6 +13,9 @@
 
             <label for="email">email:</label>
             <input type="email" name ="email" value="<?php echo htmlspecialchars($email); ?>">required>
+
+            <label for="address">Address:</label>
+            <textarea name="address" required><?php echo htmlspecialchars($address); ?></textarea>
         </form>
     </body>
 </html>
