@@ -19,6 +19,9 @@
 
             <label for="password">Password:</label>
             <input type="password" name ="password" required>
+
+            <label for="">Confirm Password:</label>
+            <input type="password" name ="confirm_password" required>
         </form>
     </body>
 </html>
