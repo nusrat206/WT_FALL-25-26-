@@ -4,6 +4,16 @@ include "../db/db.php";
 $name=$age=$email=$email=$address=$password=$confirm_password="";
 $message="";
 $messageType="";
+
+if($_SERVER["REQUEST_METHOD"]=="POST")
+{
+    $name=trim($POST["name"]??"");
+    $age=trim($POST["age"]??"");
+    $email=trim($POST["email"]??"");
+    $address=trim($POST["address"]??"");
+    $password=$POST["password"]??"";
+    $confirm_password=$POST["confirm_password"]??"";
+}
 <!DOCTYpe html>
 <html>
     <head>
