@@ -29,6 +29,16 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
         $message ="Age must be 18 to 100.";
         $messageType="error";
     }
+    elseif(empty($email))
+    {
+        $message ="Email cannot be empty.";
+        $messageType="error";
+    }
+    elseif(!filter_var($email,FILTER_VALIDATE_EMAIL))
+    {
+        $message =".";
+        $messageType="error";
+    }
 }
 <!DOCTYpe html>
 <html>
