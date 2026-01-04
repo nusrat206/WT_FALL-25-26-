@@ -26,3 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_employee'])) {
         $message = "Age must be between 18 and 65.";
         $messageType = "error";
     }
+    elseif (empty($post)) {
+        $message = "Post is required.";
+        $messageType = "error";
+    } 
