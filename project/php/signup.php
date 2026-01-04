@@ -83,6 +83,11 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
         <title>Sign up</title>
     </head>
     <body>
+    <?php if (!empty($message)): ?>
+            <div class="message <?php echo $messageType; ?>">
+                <?php echo htmlspecialchars($message); ?>
+            </div>
+        <?php endif; ?>
         <form action="login.php" method ="post">
             <label for="name">Name:</label>
             <input type="text" name ="name" value="<?php echo htmlspecialchars($name); ?>"required>
