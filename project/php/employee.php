@@ -30,3 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_employee'])) {
         $message = "Post is required.";
         $messageType = "error";
     } 
+    elseif (empty($task)) {
+        $message = "Task count is required.";
+        $messageType = "error";
+    }
