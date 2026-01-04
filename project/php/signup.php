@@ -60,6 +60,21 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
         $message ="password do not match.";
         $messageType="error";
     }
+    else {
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $sql = "INSERT INTO users (name, age, email, address, password) 
+                VALUES ('$name', '$age', '$email', '$address', '$hashed_password')";
+        
+        if($conn->query($sql)) {
+            $message = "Registration successful!";
+            $messageType = "success";
+            $name = $age = $email = $address = $password = $confirm_password = "";
+        } else {
+            $message = "Database error: " . $conn->error;
+            $messageType = "error";
+        }
+    }
+}
 }
 <!DOCTYpe html>
 <html>
