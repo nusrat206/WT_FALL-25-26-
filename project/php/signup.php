@@ -54,6 +54,12 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
         $message ="Password must be at least 6 characters.";
         $messageType="error";
     }
+    elseif($password !==$confirm_password)
+
+    {
+        $message ="password do not match.";
+        $messageType="error";
+    }
 }
 <!DOCTYpe html>
 <html>
