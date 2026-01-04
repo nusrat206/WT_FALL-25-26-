@@ -36,7 +36,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
     }
     elseif(!filter_var($email,FILTER_VALIDATE_EMAIL))
     {
-        $message =".";
+        $message ="Invalid email format";
         $messageType="error";
     }
 }
