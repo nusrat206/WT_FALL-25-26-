@@ -56,3 +56,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_employee'])) {
         }
     }
 }
+
+// Delete employee
+if (isset($_GET['delete'])) {
+    $id = $_GET['delete'];
+    $sql = "DELETE FROM employe WHERE id = $id";
+    
+    if($conn->query($sql)) {
+        $message = "Employee deleted successfully!";
+        $messageType = "success";
+    } else {
+        $message = "Error deleting employee: " . $conn->error;
+        $messageType = "error";
+    }
+}
