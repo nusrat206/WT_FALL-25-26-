@@ -1,0 +1,19 @@
+body { font-family: Arial; background: #f8f9fa; padding: 20px; }
+        .container { max-width: 1200px; margin: auto; }
+        h2 { text-align: center; }
+        .form-section, .table-section {
+            background: #fff; padding: 20px; margin-bottom: 20px;
+            border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,.1);
+        }
+        label { font-weight: bold; }
+        input, textarea, select {
+            width: 100%; padding: 8px; margin-bottom: 10px;
+        }
+        .btn { padding: 8px 15px; border: none; cursor: pointer; }
+        .btn-primary { background: #007bff; color: #fff; }
+        .btn-danger { background: #dc3545; color: #fff; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 10px; border-bottom: 1px solid #ccc; }
+        th { background: #007bff; color: #fff; }
+        .success { background: #d4edda; padding: 10px; margin-bottom: 15px; }
+        .error { background: #f8d7da; padding: 10px; margin-bottom: 15px; }
