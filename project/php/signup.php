@@ -13,6 +13,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
     $address=trim($POST["address"]??"");
     $password=$POST["password"]??"";
     $confirm_password=$POST["confirm_password"]??"";
+
+    if(empty($name))
+    {
+        $message ="Name cannot be empty.";
+        $messageType="error";
+    }
+    elseif()
 }
 <!DOCTYpe html>
 <html>
