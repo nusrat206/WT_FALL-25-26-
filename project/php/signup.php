@@ -24,7 +24,11 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
         $message ="Age cannot be empty.";
         $messageType="error";
     }
-    
+    elseif(!is_numberic($age)||$age <18 ||$age>100)
+    {
+        $message ="Age must be 18 to 100.";
+        $messageType="error";
+    }
 }
 <!DOCTYpe html>
 <html>
