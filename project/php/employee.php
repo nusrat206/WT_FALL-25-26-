@@ -17,3 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_employee'])) {
     if (empty($name)) {
         $message = "Name is required.";
         $messageType = "error";
+    }
+    elseif (empty($age)) {
+        $message = "Age is required.";
+        $messageType = "error";
+    }
