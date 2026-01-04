@@ -42,3 +42,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_employee'])) {
         $message = "Address is required.";
         $messageType = "error";
     }
+    else {
+        $sql = "INSERT INTO employe (name, age, post, task, report, address) 
+                VALUES ('$name', '$age', '$post', '$task', '$report', '$address')";
+        
+        if($conn->query($sql)) {
+            $message = "Employee added successfully!";
+            $messageType = "success";
+            $name = $age = $post = $task = $report = $address = "";
+        } else {
+            $message = "Database error: " . $conn->error;
+            $messageType = "error";
+        }
+    }
+}
