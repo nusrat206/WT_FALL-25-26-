@@ -1,5 +1,9 @@
 <?php
 include "../db/db.php";
+
+$name=$age=$email=$email=$address=$password=$confirm_password="";
+$message="";
+$messageType="";
 <!DOCTYpe html>
 <html>
     <head>
