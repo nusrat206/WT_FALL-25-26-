@@ -83,3 +83,13 @@ if ($result->num_rows > 0) {
 <html>
 <head>
     <title>Employee Management</title>
+    </head>
+<body>
+    <div class="container">
+        <h2>Employee Management System</h2>
+        
+        <?php if (!empty($message)): ?>
+            <div class="message <?php echo $messageType; ?>">
+                <?php echo htmlspecialchars($message); ?>
+            </div>
+        <?php endif; ?>
