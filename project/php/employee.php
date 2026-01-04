@@ -38,3 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_employee'])) {
         $message = "Report count is required.";
         $messageType = "error";
     }
+    elseif (empty($address)) {
+        $message = "Address is required.";
+        $messageType = "error";
+    }
