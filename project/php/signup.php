@@ -1,3 +1,5 @@
+<?php
+include "../db/db.php";
 <!DOCTYpe html>
 <html>
     <head>
