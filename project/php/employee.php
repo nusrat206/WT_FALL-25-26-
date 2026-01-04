@@ -79,3 +79,7 @@ if ($result->num_rows > 0) {
     }
 }
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Management</title>
