@@ -139,3 +139,51 @@ if ($result->num_rows > 0) {
                 <button type="submit" name="add_employee" class="btn btn-primary">Add Employee</button>
             </form>
         </div>
+         <!-- Employee Table -->
+         <div class="table-section">
+            <h3>Employee List</h3>
+            <?php if (count($employees) > 0): ?>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Post</th>
+                            <th>Tasks</th>
+                            <th>Reports</th>
+                            <th>Address</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($employees as $employee): ?>
+                        <tr>
+                            <td><?php echo $employee['id']; ?></td>
+                            <td><?php echo htmlspecialchars($employee['name']); ?></td>
+                            <td><?php echo $employee['age']; ?></td>
+                            <td><?php echo htmlspecialchars($employee['post']); ?></td>
+                            <td><?php echo $employee['task']; ?></td>
+                            <td><?php echo $employee['report']; ?></td>
+                            <td><?php echo htmlspecialchars($employee['address']); ?></td>
+                            <td class="actions">
+                                <a href="?delete=<?php echo $employee['id']; ?>" 
+                                   class="btn btn-danger" 
+                                   onclick="return confirm('Are you sure you want to delete this employee?')">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <p>No employees found. Add your first employee above.</p>
+            <?php endif; ?>
+        </div>
+    </div>
+</body>
+</html>
+<?php
+$conn->close();
+?>
