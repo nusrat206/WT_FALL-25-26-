@@ -49,6 +49,11 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
         $message ="Password cannot be empty.";
         $messageType="error";
     }
+    elseif(strlen($password)<6)
+    {
+        $message ="Password must be at least 6 characters.";
+        $messageType="error";
+    }
 }
 <!DOCTYpe html>
 <html>
