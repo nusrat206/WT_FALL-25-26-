@@ -4,7 +4,7 @@ include "../db/db.php";
 $name = $age = $post = $task = $report = $address = "";
 $message = "";
 $messageType = "";
-
+//
 // Add new employee
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_employee'])) {
     $name = trim($_POST["name"] ?? "");
