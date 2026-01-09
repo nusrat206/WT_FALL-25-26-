@@ -1,5 +1,5 @@
 <?php
-include "../db/db.php";
+include "../db/db.php"; 
 
 $name = $age = $email = $address = $password = $confirm_password = "";
 $message = "";
