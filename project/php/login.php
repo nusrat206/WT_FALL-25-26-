@@ -43,6 +43,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['customer_name'] = $user['name'];
             $_SESSION['customer_logged_in'] = true;
             
+            // Check if user exists in customers table, if not create one
+            $check_customer = $conn->prepare("SELECT * FROM customers WHERE email = ? OR name = ?");
+            $check_customer->bind_param("ss", $user['name'], $user['name']);
+            $check_customer->execute();
+            $customer_result = $check_customer->get_result();
+            
+            if ($customer_result->num_rows === 0) {
+                // Create customer record
+                $insert_customer = $conn->prepare("INSERT INTO customers (name, email) VALUES (?, ?)");
+                $insert_customer->bind_param("ss", $user['name'], $user['name']);
+                $insert_customer->execute();
+                $customer_id = $insert_customer->insert_id;
+                $_SESSION['customer_id'] = $customer_id;
+            }
+            
             // Redirect based on where they came from
             if ($from_inventory) {
                 header("Location: ../customer_inventory.php");
@@ -92,6 +107,10 @@ $conn->close();
             </div>
             
             <button type="submit" class="login-btn">Login</button>
+            
+            <div class="links-container">
+                <a href="signup.php" class="link">Sign Up</a>
+            </div>
             
             <?php if ($from_inventory): ?>
                 <div class="info-message">
