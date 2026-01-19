@@ -9,6 +9,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST["email"] ?? "");
     $password = $_POST["password"] ?? "";
     
+    // Check if admin credentials
+    if ($email === "admin@gmail.com" && $password === "Admin123*") {
+        // Set admin session
+        $_SESSION['admin_logged_in'] = true;
+        $_SESSION['admin_email'] = $email;
+        
+        // Redirect to admin page
+        header("Location: admin.php");
+        exit();
+    }
+    
     // Check if regular user exists
     $sql = "SELECT id, name, email, password FROM signup WHERE email = ?";
     $stmt = $conn->prepare($sql);
