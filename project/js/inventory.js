@@ -115,6 +115,79 @@ function editItem(id) {
     editModal.style.display = 'flex';
 }
 
+// Save Edit
+editForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('editItemId').value;
+    
+    const updates = [
+        {field: 'name', value: document.getElementById('editItemName').value.trim()},
+        {field: 'category', value: document.getElementById('editItemCategory').value},
+        {field: 'price', value: parseFloat(document.getElementById('editItemPrice').value)},
+        {field: 'description', value: document.getElementById('editItemDescription').value.trim()}
+    ];
+    
+    let success = 0;
+    for (const update of updates) {
+        try {
+            const res = await fetch('inventory.php?action=update_item', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({id, field: update.field, value: update.value})
+            });
+            const result = await res.json();
+            if (result.success) success++;
+        } catch (err) {}
+    }
+    
+    if (success === updates.length) {
+        const item = document.querySelector(`[data-id="${id}"]`);
+        const name = item.querySelector('.item-name');
+        const cat = item.querySelector('.item-category');
+        const price = item.querySelector('.detail-value');
+        
+        name.textContent = updates[0].value;
+        cat.textContent = updates[1].value.charAt(0).toUpperCase() + updates[1].value.slice(1);
+        price.textContent = '$' + parseFloat(updates[2].value).toFixed(2);
+        item.dataset.category = updates[1].value;
+        
+        editModal.style.display = 'none';
+        showMsg('Item updated', 'success');
+    } else {
+        showMsg('Error updating', 'error');
+    }
+});
+
+// Delete Item
+function deleteItem(id) {
+    if (!confirm('Delete this item?')) return;
+    
+    fetch('inventory.php?action=delete_item', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({id})
+    })
+    .then(r => r.json())
+    .then(result => {
+        if (result.success) {
+            const item = document.querySelector(`[data-id="${id}"]`);
+            item.style.opacity = '0';
+            item.style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+                item.remove();
+                if (!document.querySelectorAll('.item-card').length) {
+                    grid.innerHTML = '<p>No items. Click "Add Item" to start!</p>';
+                }
+            }, 300);
+            
+            showMsg('Item deleted', 'success');
+        } else {
+            showMsg(result.message, 'error');
+        }
+    });
+}
+
 // Helper Functions
 function addItemToGrid(item) {
     const noItems = document.querySelector('.no-items');
