@@ -187,3 +187,22 @@ textarea.error:focus {
     margin-top: 3px;
     text-align: right;
 }
+
+/* Responsive design */
+@media (max-width: 480px) {
+    .signup-form {
+        padding: 30px 20px;
+    }
+    
+    h2 {
+        font-size: 28px;
+    }
+    
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="password"],
+    textarea {
+        padding: 12px;
+    }
+}
