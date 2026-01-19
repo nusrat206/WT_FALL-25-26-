@@ -102,6 +102,19 @@ function updateQuantity(id) {
     });
 }
 
+// Edit Item
+function editItem(id) {
+    const item = window.currentItems.find(i => i.id == id);
+    if (!item) return;
+    
+    document.getElementById('editItemId').value = id;
+    document.getElementById('editItemName').value = item.name;
+    document.getElementById('editItemCategory').value = item.category;
+    document.getElementById('editItemPrice').value = item.price;
+    document.getElementById('editItemDescription').value = item.description || '';
+    editModal.style.display = 'flex';
+}
+
 // Helper Functions
 function addItemToGrid(item) {
     const noItems = document.querySelector('.no-items');
