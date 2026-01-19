@@ -19,7 +19,10 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     <div class="admin-container">
         <div class="admin-header">
             <h1>Admin Dashboard</h1>
-            <a href="logout.php" class="logout-btn">Logout</a>
+            <div>
+                <span>Welcome, Admin</span>
+                <a href="logout.php" class="logout-btn">Logout</a>
+            </div>
         </div>
         
         <p style="margin-bottom: 20px; color: #666;">
