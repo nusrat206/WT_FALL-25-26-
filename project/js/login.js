@@ -8,10 +8,18 @@ document.addEventListener('DOMContentLoaded', function() {
         
         let isValid = true;
         
+        // Clear previous errors
+        document.querySelectorAll('.field-error').forEach(function(error) {
+            error.remove();
+        });
+        
         // Validate email
         const email = emailInput.value.trim();
         if (!email) {
             showError(emailInput, "Email is required!");
+            isValid = false;
+        } else if (!validateEmail(email)) {
+            showError(emailInput, "Please enter a valid email address!");
             isValid = false;
         }
         
@@ -28,6 +36,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // Email validation function
+    function validateEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+    
     // Show error for specific field
     function showError(inputElement, message) {
         const errorElement = document.createElement('div');
@@ -39,5 +53,15 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Insert error after input
         inputElement.parentNode.appendChild(errorElement);
+        
+        // Focus on the error field
+        inputElement.focus();
+    }
+    
+    // Clear all errors
+    function clearAllErrors() {
+        document.querySelectorAll('.field-error').forEach(function(error) {
+            error.remove();
+        });
     }
 });
