@@ -5,6 +5,9 @@ include "../db/db.php";
 $email = $password = "";
 $message = "";
 
+// Check if user came from inventory page
+$from_inventory = isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], 'customer_inventory') !== false;
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST["email"] ?? "");
     $password = $_POST["password"] ?? "";
@@ -35,8 +38,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_name'] = $user['name'];
             $_SESSION['logged_in'] = true;
             
-            // Redirect to homepage
-            header("Location: index.php");
+            // Also set customer session for inventory access
+            $_SESSION['customer_id'] = $user['id'];
+            $_SESSION['customer_name'] = $user['name'];
+            $_SESSION['customer_logged_in'] = true;
+            
+            // Redirect based on where they came from
+            if ($from_inventory) {
+                header("Location: ../customer_inventory.php");
+            } else {
+                header("Location: index.php");
+            }
             exit();
         } else {
             $message = "Invalid email or password.";
@@ -80,6 +92,12 @@ $conn->close();
             </div>
             
             <button type="submit" class="login-btn">Login</button>
+            
+            <?php if ($from_inventory): ?>
+                <div class="info-message">
+                    <p>Login to access our shop and make purchases.</p>
+                </div>
+            <?php endif; ?>
         </form>
     </div>
 </body>
