@@ -182,3 +182,48 @@ body {
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0,0,0,0.12);
 }
+
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 15px;
+}
+
+.item-name {
+    font-size: 18px;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.item-category {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #e9ecef;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #495057;
+    margin-top: 5px;
+}
+
+.item-details {
+    margin: 15px 0;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.detail-label {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.detail-value {
+    color: #2c3e50;
+    font-weight: 600;
+}
