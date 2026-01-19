@@ -52,6 +52,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $messageType = "error";
     }
 }
+} else {
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $sql = "INSERT INTO signup (name, age, email, address, password) 
+            VALUES ('$name', '$age', '$email', '$address', '$hashed_password')";
+    
+    if($conn->query($sql)) {
+        $message = "Registration successful! Redirecting to login...";
+        $messageType = "success";
+        $name = $age = $email = $address = $password = $confirm_password = "";
+        
+        // Redirect to login page after 2 seconds
+        header("refresh:2;url=login.php");
+    } else {
+        $message = "Database error: " . $conn->error;
+        $messageType = "error";
+    }
+}
 ?>
 
 
