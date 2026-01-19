@@ -227,3 +227,46 @@ body {
     color: #2c3e50;
     font-weight: 600;
 }
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.quantity-input {
+    width: 70px;
+    padding: 5px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.update-qty-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.in-stock {
+    background: #d4edda;
+    color: #155724;
+}
+
+.out-stock {
+    background: #f8d7da;
+    color: #721c24;
+}
