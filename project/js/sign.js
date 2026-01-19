@@ -7,6 +7,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const passwordInput = document.getElementById('password');
     const confirmPasswordInput = document.getElementById('confirm_password');
     
+    // Clear error on input
+    const allInputs = [nameInput, ageInput, emailInput, addressInput, passwordInput, confirmPasswordInput];
+    allInputs.forEach(input => {
+        input.addEventListener('input', function() {
+            clearFieldError(this);
+        });
+    });
+    
+    // Real-time password match check
+    confirmPasswordInput.addEventListener('input', function() {
+        const password = passwordInput.value;
+        const confirmPassword = this.value;
+        
+        if (confirmPassword && password !== confirmPassword) {
+            showError(this, "Passwords do not match!");
+        } else {
+            clearFieldError(this);
+        }
+    });
+    
     signupForm.addEventListener('submit', function(e) {
         let isValid = true;
         
@@ -83,11 +103,22 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Show error for specific field
     function showError(inputElement, message) {
+        clearFieldError(inputElement);
+        
         const errorElement = document.createElement('div');
         errorElement.className = 'field-error';
         errorElement.textContent = message;
         
         inputElement.parentNode.appendChild(errorElement);
+        inputElement.focus();
+    }
+    
+    // Clear error for specific field
+    function clearFieldError(inputElement) {
+        const errorElement = inputElement.parentNode.querySelector('.field-error');
+        if (errorElement) {
+            errorElement.remove();
+        }
     }
     
     // Clear all errors
