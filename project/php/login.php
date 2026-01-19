@@ -109,6 +109,7 @@ $conn->close();
             <button type="submit" class="login-btn">Login</button>
             
             <div class="links-container">
+                <a href="forgot.php" class="link">Forgot Password?</a>
                 <a href="signup.php" class="link">Sign Up</a>
             </div>
             
