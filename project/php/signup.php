@@ -42,6 +42,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $messageType = "error";
     }
 }
+} else {
+    // Check if email already exists
+    $check_sql = "SELECT id FROM signup WHERE email = '$email'";
+    $check_result = $conn->query($check_sql);
+    
+    if ($check_result->num_rows > 0) {
+        $message = "Email already registered. Please use another email or login.";
+        $messageType = "error";
+    }
+}
 ?>
 
 
