@@ -68,3 +68,17 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
 }
+
+.admin-welcome {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #a0a0c0;
+    font-size: 18px;
+}
+
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
