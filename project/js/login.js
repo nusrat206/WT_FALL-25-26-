@@ -3,15 +3,28 @@ document.addEventListener('DOMContentLoaded', function() {
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
     
+    // Clear error messages when user starts typing
+    emailInput.addEventListener('input', function() {
+        const errorElement = this.parentNode.querySelector('.field-error');
+        if (errorElement) {
+            errorElement.remove();
+        }
+    });
+    
+    passwordInput.addEventListener('input', function() {
+        const errorElement = this.parentNode.querySelector('.field-error');
+        if (errorElement) {
+            errorElement.remove();
+        }
+    });
+    
     loginForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
         let isValid = true;
         
         // Clear previous errors
-        document.querySelectorAll('.field-error').forEach(function(error) {
-            error.remove();
-        });
+        clearAllErrors();
         
         // Validate email
         const email = emailInput.value.trim();
@@ -27,6 +40,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const password = passwordInput.value;
         if (!password) {
             showError(passwordInput, "Password is required!");
+            isValid = false;
+        } else if (password.length < 6) {
+            showError(passwordInput, "Password must be at least 6 characters!");
             isValid = false;
         }
         
@@ -44,6 +60,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Show error for specific field
     function showError(inputElement, message) {
+        // Remove existing error if any
+        const existingError = inputElement.parentNode.querySelector('.field-error');
+        if (existingError) {
+            existingError.remove();
+        }
+        
+        // Create error message element
         const errorElement = document.createElement('div');
         errorElement.className = 'field-error';
         errorElement.textContent = message;
