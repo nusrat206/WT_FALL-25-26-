@@ -93,4 +93,18 @@ document.addEventListener('DOMContentLoaded', function() {
             input.classList.remove('error');
         });
     }
+    
+    // Add CSS for error state
+    const style = document.createElement('style');
+    style.textContent = `
+        input.error {
+            border-color: #f5576c !important;
+            background-color: #f8f9fa;
+        }
+        
+        input.error:focus {
+            box-shadow: 0 0 0 3px rgba(245, 87, 108, 0.1) !important;
+        }
+    `;
+    document.head.appendChild(style);
 });
