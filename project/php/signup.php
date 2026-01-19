@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "../db/db.php"; 
+
 $name = $age = $email = $address = $password = $confirm_password = "";
 $message = "";
 $messageType = ""; 
@@ -40,37 +41,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif ($password !== $confirm_password) {
         $message = "Passwords do not match.";
         $messageType = "error";
-    }
-}
-} else {
-    // Check if email already exists
-    $check_sql = "SELECT id FROM signup WHERE email = '$email'";
-    $check_result = $conn->query($check_sql);
-    
-    if ($check_result->num_rows > 0) {
-        $message = "Email already registered. Please use another email or login.";
-        $messageType = "error";
-    }
-}
-} else {
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    $sql = "INSERT INTO signup (name, age, email, address, password) 
-            VALUES ('$name', '$age', '$email', '$address', '$hashed_password')";
-    
-    if($conn->query($sql)) {
-        $message = "Registration successful! Redirecting to login...";
-        $messageType = "success";
-        $name = $age = $email = $address = $password = $confirm_password = "";
-        
-        // Redirect to login page after 2 seconds
-        header("refresh:2;url=login.php");
     } else {
-        $message = "Database error: " . $conn->error;
-        $messageType = "error";
+        // Check if email already exists
+        $check_sql = "SELECT id FROM signup WHERE email = '$email'";
+        $check_result = $conn->query($check_sql);
+        
+        if ($check_result->num_rows > 0) {
+            $message = "Email already registered. Please use another email or login.";
+            $messageType = "error";
+        } else {
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $sql = "INSERT INTO signup (name, age, email, address, password) 
+                    VALUES ('$name', '$age', '$email', '$address', '$hashed_password')";
+            
+            if($conn->query($sql)) {
+                $message = "Registration successful! Redirecting to login...";
+                $messageType = "success";
+                $name = $age = $email = $address = $password = $confirm_password = "";
+                
+                // Redirect to login page after 2 seconds
+                header("refresh:2;url=login.php");
+            } else {
+                $message = "Database error: " . $conn->error;
+                $messageType = "error";
+            }
+        }
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -84,25 +82,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="signup-form">
         <h2>Create Account</h2>
         
+        <?php if (!empty($message)): ?>
+            <div class="message <?php echo $messageType; ?>">
+                <?php echo htmlspecialchars($message); ?>
+            </div>
+        <?php endif; ?>
+        
         <form method="post" action="" id="signupForm">
             <div class="form-group">
                 <label for="name">Full Name:</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($name); ?>" required>
             </div>
             
             <div class="form-group">
                 <label for="age">Age:</label>
-                <input type="number" id="age" name="age" min="18" max="100" required>
+                <input type="number" id="age" name="age" value="<?php echo htmlspecialchars($age); ?>" min="18" max="100" required>
             </div>
             
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>" required>
             </div>
             
             <div class="form-group">
                 <label for="address">Address:</label>
-                <textarea id="address" name="address" required></textarea>
+                <textarea id="address" name="address" required><?php echo htmlspecialchars($address); ?></textarea>
             </div>
             
             <div class="form-group">
@@ -126,3 +130,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="../js/sign.js"></script>
 </body>
 </html>
+<?php
+$conn->close();
+?>
