@@ -253,6 +253,30 @@ body {
     font-size: 12px;
 }
 
+.item-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.edit-btn {
+    background: #ffc107;
+    color: #212529;
+    flex: 1;
+    padding: 8px;
+    font-size: 13px;
+}
+
+.delete-btn {
+    background: #dc3545;
+    color: white;
+    flex: 1;
+    padding: 8px;
+    font-size: 13px;
+}
+
 .status {
     display: inline-block;
     padding: 4px 10px;
@@ -269,4 +293,18 @@ body {
 .out-stock {
     background: #f8d7da;
     color: #721c24;
+}
+
+.no-items {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 50px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.no-items p {
+    color: #6c757d;
+    font-size: 18px;
 }
