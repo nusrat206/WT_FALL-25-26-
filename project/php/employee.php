@@ -2,46 +2,35 @@
 // ... (update the AJAX handler switch statement)
 
 // In the switch statement, add:
-case 'add_report':
-    addReport();
+case 'update_work':
+    updateWork();
     break;
 
-// Add after the deleteEmployee function
-// Function to add report
-function addReport() {
+// Add after the addReport function
+// Function to update work done
+function updateWork() {
     global $conn;
     
     $data = json_decode(file_get_contents('php://input'), true);
     $id = intval($data['id'] ?? 0);
+    $work_done = trim($data['work_done'] ?? '');
     
     if ($id <= 0) {
         echo json_encode(['success' => false, 'message' => 'Invalid employee ID']);
         return;
     }
     
-    // Get current reports
-    $getSql = "SELECT reports FROM employees WHERE id = ?";
-    $getStmt = $conn->prepare($getSql);
-    $getStmt->bind_param("i", $id);
-    $getStmt->execute();
-    $result = $getStmt->get_result();
-    $employee = $result->fetch_assoc();
-    $currentReports = intval($employee['reports']);
-    $getStmt->close();
-    
-    // Update reports
-    $newReports = $currentReports + 1;
-    $sql = "UPDATE employees SET reports = ? WHERE id = ?";
+    $sql = "UPDATE employees SET work_done = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $newReports, $id);
+    $stmt->bind_param("si", $work_done, $id);
     
     if ($stmt->execute()) {
-        echo json_encode(['success' => true, 'reports' => $newReports, 'message' => 'Report added successfully']);
+        echo json_encode(['success' => true, 'message' => 'Work updated successfully']);
     } else {
-        echo json_encode(['success' => false, 'message' => 'Error adding report']);
+        echo json_encode(['success' => false, 'message' => 'Error updating work']);
     }
     $stmt->close();
 }
 
-// Update the HTML table to include reports column
+// Update the HTML table to include work done column and modals
 ?>
