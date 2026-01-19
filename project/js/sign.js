@@ -165,6 +165,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function showError(inputElement, message) {
         clearFieldError(inputElement);
         
+        inputElement.classList.add('error');
+        
         const errorElement = document.createElement('div');
         errorElement.className = 'field-error';
         errorElement.textContent = message;
@@ -175,6 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Clear error for specific field
     function clearFieldError(inputElement) {
+        inputElement.classList.remove('error');
         const errorElement = inputElement.parentNode.querySelector('.field-error');
         if (errorElement) {
             errorElement.remove();
@@ -185,6 +188,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function clearAllErrors() {
         document.querySelectorAll('.field-error').forEach(function(error) {
             error.remove();
+        });
+        document.querySelectorAll('.error').forEach(function(input) {
+            input.classList.remove('error');
         });
     }
 });
