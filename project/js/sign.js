@@ -7,11 +7,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const passwordInput = document.getElementById('password');
     const confirmPasswordInput = document.getElementById('confirm_password');
     
+    // Create password strength indicator
+    createPasswordStrengthIndicator();
+    
     // Clear error on input
     const allInputs = [nameInput, ageInput, emailInput, addressInput, passwordInput, confirmPasswordInput];
     allInputs.forEach(input => {
         input.addEventListener('input', function() {
             clearFieldError(this);
+            if (this === passwordInput) {
+                updatePasswordStrength(this.value);
+            }
         });
     });
     
@@ -99,6 +105,60 @@ document.addEventListener('DOMContentLoaded', function() {
     function validateEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
+    }
+    
+    // Create password strength indicator
+    function createPasswordStrengthIndicator() {
+        const passwordGroup = passwordInput.parentElement;
+        const strengthContainer = document.createElement('div');
+        strengthContainer.className = 'password-strength';
+        
+        const strengthMeter = document.createElement('div');
+        strengthMeter.className = 'strength-meter';
+        
+        const strengthText = document.createElement('div');
+        strengthText.className = 'strength-text';
+        
+        strengthContainer.appendChild(strengthMeter);
+        passwordGroup.appendChild(strengthContainer);
+        passwordGroup.appendChild(strengthText);
+    }
+    
+    // Update password strength indicator
+    function updatePasswordStrength(password) {
+        const strengthMeter = document.querySelector('.strength-meter');
+        const strengthText = document.querySelector('.strength-text');
+        
+        let strength = 0;
+        let text = '';
+        let color = '';
+        
+        if (password.length >= 6) strength += 25;
+        if (/[A-Z]/.test(password)) strength += 25;
+        if (/[0-9]/.test(password)) strength += 25;
+        if (/[^A-Za-z0-9]/.test(password)) strength += 25;
+        
+        if (strength === 0) {
+            text = '';
+            color = 'transparent';
+        } else if (strength <= 25) {
+            text = 'Weak';
+            color = '#f5576c';
+        } else if (strength <= 50) {
+            text = 'Fair';
+            color = '#f093fb';
+        } else if (strength <= 75) {
+            text = 'Good';
+            color = '#4facfe';
+        } else {
+            text = 'Strong';
+            color = '#2af598';
+        }
+        
+        strengthMeter.style.width = strength + '%';
+        strengthMeter.style.background = color;
+        strengthText.textContent = text;
+        strengthText.style.color = color;
     }
     
     // Show error for specific field
