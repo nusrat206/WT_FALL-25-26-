@@ -5,17 +5,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Clear error messages when user starts typing
     emailInput.addEventListener('input', function() {
-        const errorElement = this.parentNode.querySelector('.field-error');
-        if (errorElement) {
-            errorElement.remove();
-        }
+        clearFieldError(this);
     });
     
     passwordInput.addEventListener('input', function() {
-        const errorElement = this.parentNode.querySelector('.field-error');
-        if (errorElement) {
-            errorElement.remove();
-        }
+        clearFieldError(this);
     });
     
     loginForm.addEventListener('submit', function(e) {
@@ -61,10 +55,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Show error for specific field
     function showError(inputElement, message) {
         // Remove existing error if any
-        const existingError = inputElement.parentNode.querySelector('.field-error');
-        if (existingError) {
-            existingError.remove();
-        }
+        clearFieldError(inputElement);
+        
+        // Add error class to input
+        inputElement.classList.add('error');
         
         // Create error message element
         const errorElement = document.createElement('div');
@@ -81,10 +75,22 @@ document.addEventListener('DOMContentLoaded', function() {
         inputElement.focus();
     }
     
+    // Clear error for specific field
+    function clearFieldError(inputElement) {
+        inputElement.classList.remove('error');
+        const errorElement = inputElement.parentNode.querySelector('.field-error');
+        if (errorElement) {
+            errorElement.remove();
+        }
+    }
+    
     // Clear all errors
     function clearAllErrors() {
         document.querySelectorAll('.field-error').forEach(function(error) {
             error.remove();
+        });
+        document.querySelectorAll('.error').forEach(function(input) {
+            input.classList.remove('error');
         });
     }
 });
