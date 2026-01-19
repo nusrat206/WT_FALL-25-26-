@@ -248,3 +248,15 @@ function showMsg(text, type) {
         message.style.display = 'none';
     }, 3000);
 }
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.item-card').forEach((card, i) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, i * 100);
+    });
+});
