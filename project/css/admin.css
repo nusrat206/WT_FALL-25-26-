@@ -182,3 +182,24 @@ body {
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
+
+.admin-links {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.back-link {
+    color: #00b4db;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.back-link:hover {
+    color: #0083b0;
+}
