@@ -1,6 +1,47 @@
 <?php
 session_start();
 include "../db/db.php"; 
+$name = $age = $email = $address = $password = $confirm_password = "";
+$message = "";
+$messageType = ""; 
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = trim($_POST["name"] ?? "");
+    $age = trim($_POST["age"] ?? "");
+    $email = trim($_POST["email"] ?? "");
+    $address = trim($_POST["address"] ?? "");
+    $password = $_POST["password"] ?? "";
+    $confirm_password = $_POST["confirm_password"] ?? "";
+    
+    if (empty($name)) {
+        $message = "Name is required.";
+        $messageType = "error";
+    } elseif (empty($age)) {
+        $message = "Age is required.";
+        $messageType = "error";
+    } elseif (!is_numeric($age) || $age < 18 || $age > 100) {
+        $message = "Age must be between 18 and 100.";
+        $messageType = "error";
+    } elseif (empty($email)) {
+        $message = "Email is required.";
+        $messageType = "error";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $message = "Invalid email format.";
+        $messageType = "error";
+    } elseif (empty($address)) {
+        $message = "Address is required.";
+        $messageType = "error";
+    } elseif (empty($password)) {
+        $message = "Password is required.";
+        $messageType = "error";
+    } elseif (strlen($password) < 6) {
+        $message = "Password must be at least 6 characters.";
+        $messageType = "error";
+    } elseif ($password !== $confirm_password) {
+        $message = "Passwords do not match.";
+        $messageType = "error";
+    }
+}
 ?>
 
 
