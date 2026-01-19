@@ -61,15 +61,16 @@ function showMessage(text, type) {
     messageDiv.className = `message ${type === 'success' ? 'success' : 'error'}`;
     messageDiv.style.display = 'block';
     
-    // Auto hide after 3 seconds
+    
     setTimeout(() => {
         messageDiv.style.display = 'none';
     }, 3000);
 }
 
-// Escape HTML to prevent XSS
+
 function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+
 }
