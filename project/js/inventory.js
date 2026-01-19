@@ -67,6 +67,41 @@ addForm.addEventListener('submit', async (e) => {
     }
 });
 
+// Update Quantity
+function updateQuantity(id) {
+    const input = document.getElementById(`qty-input-${id}`);
+    const qty = parseInt(input.value);
+    
+    if (isNaN(qty) || qty < 0) {
+        showMsg('Invalid quantity', 'error');
+        return;
+    }
+    
+    fetch('inventory.php?action=update_item', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({id, field: 'quantity', value: qty})
+    })
+    .then(r => r.json())
+    .then(result => {
+        if (result.success) {
+            document.getElementById(`quantity-${id}`).textContent = qty;
+            const item = document.querySelector(`[data-id="${id}"]`);
+            const status = item.querySelector('.status');
+            if (qty > 0) {
+                status.textContent = 'In Stock';
+                status.className = 'status in-stock';
+            } else {
+                status.textContent = 'Out';
+                status.className = 'status out-stock';
+            }
+            showMsg('Quantity updated', 'success');
+        } else {
+            showMsg(result.message, 'error');
+        }
+    });
+}
+
 // Helper Functions
 function addItemToGrid(item) {
     const noItems = document.querySelector('.no-items');
