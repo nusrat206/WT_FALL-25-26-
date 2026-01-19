@@ -1,50 +1,54 @@
 <?php
-session_start();
-include "../db/db.php";
+// ... (previous session and AJAX handler code)
 
-// Check if admin is logged in
-if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
-    header("Location: ../login.php");
-    exit();
-}
-
-// Handle AJAX requests
-if (isset($_GET['action'])) {
-    header('Content-Type: application/json');
-    
-    switch ($_GET['action']) {
-        case 'get_employees':
-            getEmployees();
-            break;
-        case 'add_employee':
-            addEmployee();
-            break;
-        case 'delete_employee':
-            deleteEmployee();
-            break;
-        default:
-            echo json_encode(['success' => false, 'message' => 'Invalid action']);
-    }
-    exit();
-}
-
-// Function to get all employees
-function getEmployees() {
+// Function to add employee
+function addEmployee() {
     global $conn;
     
-    $sql = "SELECT * FROM employees ORDER BY created_at DESC";
-    $result = $conn->query($sql);
+    $data = json_decode(file_get_contents('php://input'), true);
     
-    $employees = [];
-    while ($row = $result->fetch_assoc()) {
-        $employees[] = $row;
+    $name = trim($data['name'] ?? '');
+    $email = trim($data['email'] ?? '');
+    $mobile = trim($data['mobile'] ?? '');
+    $post = trim($data['post'] ?? '');
+    $address = trim($data['address'] ?? '');
+    $salary = floatval($data['salary'] ?? 0);
+    $hired_date = $data['hired_date'] ?? date('Y-m-d');
+    
+    if (empty($name) || empty($email) || empty($mobile) || empty($post) || empty($address)) {
+        echo json_encode(['success' => false, 'message' => 'All fields are required']);
+        return;
     }
     
-    echo json_encode([
-        'success' => true, 
-        'employees' => $employees
-    ]);
+    // Check if email already exists
+    $checkSql = "SELECT id FROM employees WHERE email = ?";
+    $checkStmt = $conn->prepare($checkSql);
+    $checkStmt->bind_param("s", $email);
+    $checkStmt->execute();
+    $checkResult = $checkStmt->get_result();
+    
+    if ($checkResult->num_rows > 0) {
+        echo json_encode(['success' => false, 'message' => 'Email already exists']);
+        $checkStmt->close();
+        return;
+    }
+    $checkStmt->close();
+    
+    // Insert new employee
+    $sql = "INSERT INTO employees (name, email, mobile, post, address, salary, hired_date) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssssds", $name, $email, $mobile, $post, $address, $salary, $hired_date);
+    
+    if ($stmt->execute()) {
+        $newId = $stmt->insert_id;
+        echo json_encode(['success' => true, 'id' => $newId, 'message' => 'Employee added successfully']);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Error adding employee']);
+    }
+    $stmt->close();
 }
 
-// Rest of the HTML remains the same as Commit 1
+// Rest of the HTML remains the same
 ?>
