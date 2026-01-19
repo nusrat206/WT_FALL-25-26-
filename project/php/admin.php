@@ -31,19 +31,19 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
         
         <div class="dashboard-cards">
             <div class="card">
-                <h3>Employee</h3>
+                <h3>📊 Employee</h3>
                 <p>Manage employees</p>
                 <a href="employee.php" class="card-btn">Manage</a>
             </div>
             
             <div class="card">
-                <h3>Inventory</h3>
+                <h3>📦 Inventory</h3>
                 <p>Manage inventory items</p>
                 <a href="inventory.php" class="card-btn">Manage</a>
             </div>
             
             <div class="card">
-                <h3>Customer</h3>
+                <h3>👥 Customer</h3>
                 <p>Manage customers</p>
                 <a href="customer.php" class="card-btn">Manage</a>
             </div>
